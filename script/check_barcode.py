@@ -33,13 +33,6 @@ def translation(seq):
   pep = ''.join(pep)
   return pep
 
-def extract_3rd_nucleotide(seq):
-  nucleotide_3rd = ''
-  for n in range(len(seq)):
-    if (n + 1) % 3 == 0:
-      nucleotide_3rd += seq[n]
-  return nucleotide_3rd
-
 def barcode_permutation(nucleotide_3rd):
   barcode_perms = []
   for i in nucleotide_3rd:
@@ -53,21 +46,45 @@ def barcode_permutation(nucleotide_3rd):
     barcode_list.append(''.join(barcode_perm))
   return barcode_list
   
-def extract_barcodes(infile, outfile):
+def WT_barcodes(template, roi_length, t_offset):
+  WT_seq = template[t_offset:t_offset+roi_length]
+  WT_3rd = WT_seq[2::3].upper()
+  return WT_3rd
+
+def extract_barcodes(infile, outfile, ref_dict, roi_length, t_offset):
+  print ("writing: %s" % outfile)
   records = SeqIO.parse(infile,"fasta")
   outfile = open(outfile,'w')
   barcode_dict = {}
-  outfile.write("barcode"+"\t"+"position"+"\n")
+  outfile.write("barcode"+"\t"+'frag'+"\t"+"position"+"\n")
   for record in records:
     ID  = record.id
     seq = record.seq
-    seq = seq.upper()
-    nucleotide_3rd = extract_3rd_nucleotide(seq)
+    cas = int(str(ID).rsplit('_')[0].replace('Cassette',''))
+    if cas <= 18: 
+      template = ref_dict['Frag_A']
+      adj_cas = cas
+      frag = 'A'
+    else: 
+      template = ref_dict['Frag_B']
+      adj_cas = cas-18
+      frag = 'B'
+    flank5 = template[t_offset:adj_cas*24-3]
+    flank3 = template[t_offset+adj_cas*24:t_offset+roi_length]
+    seq = seq[21:21+24]
+    seq = flank5+seq+flank3
+    nucleotide_3rd = seq[2::3].upper()
     barcode_list = barcode_permutation(nucleotide_3rd)
     barcode_dict[ID] = barcode_list
-    print ("Barcode:"+"\t"+ID+"\t"+','.join(barcode_list))
+    #print ("Barcode:"+"\t"+ID+"\t"+','.join(barcode_list))
     for barcode in barcode_list:
-      outfile.write(barcode+"\t"+ID+"\n")
+      outfile.write(barcode+"\t"+frag+"\t"+ID+"\n")
+  WT_3rd_A = WT_barcodes(ref_dict['Frag_A'], roi_length, t_offset)
+  WT_3rd_B = WT_barcodes(ref_dict['Frag_B'], roi_length, t_offset)
+  barcode_dict['WT_A'] = [WT_3rd_A]
+  barcode_dict['WT_B'] = [WT_3rd_B]
+  outfile.write(WT_3rd_A+"\t"+'A'+"\t"+'WT'+"\n")
+  outfile.write(WT_3rd_B+"\t"+'B'+"\t"+'WT'+"\n")
   outfile.close()
   return (barcode_dict)
 
@@ -89,10 +106,22 @@ def compare_barcodes(barcode_dict):
   if overlap_count == 0: 
     print ("Good job! No overlapping barcodes!")
 
+def read_ref(reffile):
+  records = SeqIO.parse(reffile,"fasta")
+  ref_dict = {}
+  for record in records:
+    ID  = str(record.id) 
+    seq = str(record.seq)
+    ref_dict[ID] = seq
+  return ref_dict
+
 def main():
+  ref_dict = read_ref('Fasta/Amplicon.fa')
   infile  = "primer/SARS2-NTD_lib_Fprimer_bc.fa"
   outfile = "data/barcodes.tsv"
-  barcode_dict = extract_barcodes(infile, outfile)
+  roi_length = 432
+  t_offset   = 21
+  barcode_dict = extract_barcodes(infile, outfile, ref_dict, roi_length, t_offset)
   compare_barcodes(barcode_dict)
 
 if __name__ == "__main__":
