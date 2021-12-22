@@ -29,11 +29,11 @@
       - [./data/barcodes.tsv](./data/barcodes.tsv)
 
 ### Calculating experssion score from DMS data
-1. Merge overlapping paired-end reads using [PEAR](https://github.com/tseemann/PEAR)
+1. Merge overlapping paired-end reads using [PEAR](https://github.com/tseemann/PEAR)   
 ```pear -f [FASTQ FILE FOR FORWARD READ] -r [FASTQ FILE FOR FORWARD READ] -o [OUTPUT FASTQ FILE]```   
     - Output files should be placed in the fastq_merged/ folder
 
-2. Counting variants based on nucleotide sequences
+2. Counting variants based on nucleotide sequences   
 ```python3 script/NTD_fastq2count.py```   
     - Input files:
       - Merged read files in fastq_merged/ folder
@@ -41,7 +41,7 @@
       - result/NTD_DMS_count_nuc_A.tsv
       - result/NTD_DMS_count_nuc_B.tsv
 
-3. Convert nucleotide sequences to amino acid mutations
+3. Convert nucleotide sequences to amino acid mutations   
 ```python3 script/NTD_count_nuc2aa.py```   
     - Input files:
       - [./data/barcodes.tsv](./data/barcodes.tsv)
@@ -51,7 +51,7 @@
       - result/NTD_DMS_count_aa_A.tsv
       - result/NTD_DMS_count_aa_B.tsv
 
-4. Compute expression score
+4. Compute expression score   
 ```python3 script/NTD_count2score.py```   
     - Input files:
       - result/NTD_DMS_count_aa_A.tsv
