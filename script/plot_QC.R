@@ -131,5 +131,3 @@ plot_replicate_cor(df_fus, 'graph/QC_replicate_fus.png', "Fusion score")
 plot_exp_vs_fus(df, 'graph/Exp_vs_fus.png')
 plot_by_class(df_exp, 'graph/Exp_by_class.png', 'Expression score')
 plot_by_class(df_fus, 'graph/Fus_by_class.png', 'Fusion score')
-
-print (filter(df, Fus_score < 0.6 & Exp_score > 2))
