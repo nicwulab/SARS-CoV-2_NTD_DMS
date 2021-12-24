@@ -15,6 +15,7 @@
 * [./PDB/7b62.pdb](./PDB/PDB/7b62.pdb): NTD crystal structure from [Rosa et al. (2021)](https://www.science.org/doi/10.1126/sciadv.abg7607)
 * [./PDB/spike_with_complete_NTD.pdb](./PDB/spike_with_complete_NTD.pdb): 6zge with NTD in chain A being replaced by 7b62 (chain X)
 * [./data/ASA.table](./data/ASA.table): Maximum accessible surface area for individual amino acids from [Tien et al. (2013)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0080635)
+* Raw read files in fastq format from NIH SRA database [BioProject PRJNA792013](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA792013)
 
 ### Primer design for DMS library construction
 1. Generating foward (NNK + internal barcode) and reverse primers (constant)   
