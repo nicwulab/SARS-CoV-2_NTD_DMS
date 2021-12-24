@@ -66,7 +66,7 @@
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
 
 ### Structural analysis
-1. Computing relative solvent accessibility (RSA) for individual residues
+1. Computing relative solvent accessibility (RSA) for individual residues   
 ``python3 script/RSA_analysis.py``   
     - Input files:
       - [./PDB/7b62.pdb](./PDB/7b62.pdb)
@@ -75,14 +75,14 @@
     - Ouput file:
       - [./result/NTD_RSA.tsv](./result/NTD_RSA.tsv)
 
-2. Computing the distance of individual NTD residues to RBD or S2
+2. Computing the distance of individual NTD residues to RBD or S2   
 ``python3 script/Dist_analysis.py``   
     - Input file:
       - [./PDB/spike_with_complete_NTD.pdb](./PDB/spike_with_complete_NTD.pdb)
     - Output file:
       - [./result/Dist_NTD_to_RBD_S2.tsv](./result/Dist_NTD_to_RBD_S2.tsv)
 
-3. Replace the B-factor by expression score in the PDB file
+3. Replace the B-factor by expression score in the PDB file   
 ``python3 script/Bfactor_to_score.py``   
     - Input file:
       - [./PDB/7b62.pdb](./PDB/7b62.pdb)
@@ -90,16 +90,16 @@
     - Output file:
       - [./PDB/7b62_exp.pdb](./PDB/7b62_exp.pdb)
 
-4. Plot mean expression score vs RSA for individual residues
-``Rscript script/plot_RSA.R``
+4. Plot mean expression score vs RSA for individual residues   
+``Rscript script/plot_RSA.R``   
     - Input file:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
       - [./result/NTD_RSA.tsv](./result/NTD_RSA.tsv)
     - Output file:
       - [./graph/Exp_vs_RSA.png](./graph/Exp_vs_RSA.png)
 
-5. Plot mean expression score vs distance to RBD/S2 for individual residues
-``Rscript script/plot_Dist.R``
+5. Plot mean expression score vs distance to RBD/S2 for individual residues   
+``Rscript script/plot_Dist.R``   
     - Input file:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
       - [./result/Dist_NTD_to_RBD_S2.tsv](./result/Dist_NTD_to_RBD_S2.tsv)
