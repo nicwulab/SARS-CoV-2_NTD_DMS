@@ -36,7 +36,7 @@
 ### Calculating experssion score from DMS data
 1. Merge overlapping paired-end reads using [PEAR](https://github.com/tseemann/PEAR)   
 ``pear -f [FASTQ FILE FOR FORWARD READ] -r [FASTQ FILE FOR FORWARD READ] -o [OUTPUT FASTQ FILE]``   
-    - Output files should be placed in the fastq_merged/ folder
+    - Output files should be placed in the fastq_merged/ folder and named as described in [./doc/filename_merged_fastq.txt](./doc/filename_merged_fastq.txt)
 
 2. Counting variants based on nucleotide sequences   
 ``python3 script/NTD_fastq2count.py``   
