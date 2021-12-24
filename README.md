@@ -65,6 +65,21 @@
       - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
 
+5. Plot correlation between replicates and compare silent/missense/nonsense   
+``Rscript script/plot_QC.R``   
+    - Input file:
+      - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
+    - Output files:
+      - [./graph/QC_replicate_exp.png](./graph/QC_replicate_exp.png)
+      - [./graph/Exp_by_class.png](./graph/Exp_by_class.png)
+
+6. Plot heatmap for the expression scores of individual mutations   
+``Rscript script/plot_score_heatmap``   
+    - Input file:
+      - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
+    - Ouput file:
+      - [./graph/NTD_exp_heatmap.png](./graph/NTD_exp_heatmap.png)
+
 ### Structural analysis
 1. Computing relative solvent accessibility (RSA) for individual residues   
 ``python3 script/RSA_analysis.py``   

@@ -66,33 +66,6 @@ mut_classification <- function(mut_class, resi){
   else(return (mut_class))
   }
 
-plot_exp_vs_fus <- function(df, graphname){
-  print (paste('correlation for:', graphname, cor(df$Exp_score, df$Fus_score)))
-  textsize <- 7
-  palette <- qualpal(n = 3, list(h = c(0, 360), s = c(0.4, 0.6), l = c(0.5, 0.85)))$hex
-  df <- df %>%
-          filter(mut_class != 'WT') %>%
-          mutate(resi=str_sub(mut,1,-2)) #%>%
-          #mutate(mut_class=mapply(mut_classification, mut_class, resi)) %>%
-          #mutate(mut_class=factor(mut_class, levels=c('missense','nonsense','silent','W64X')))
-  p <- ggplot(df,aes(x=Exp_score, y=Fus_score, color=mut_class)) +
-         geom_point(size=0.1,pch=16, alpha=0.5) +
-         scale_color_manual(values=palette) +
-         theme_cowplot(12) +
-         theme(plot.title=element_blank(),
-               plot.background = element_rect(fill = "white"),
-               axis.title=element_text(size=textsize,face="bold"),
-               axis.text=element_text(size=textsize,face="bold"),
-               legend.key.size=unit(0.1,'in'),
-               legend.spacing.x=unit(0.03, 'in'),
-               legend.title=element_blank(),
-               legend.text=element_text(size=textsize-1,face="bold"),
-               legend.position='right') +
-         guides(color = guide_legend(override.aes = list(size = 1))) +
-         labs(x=bquote(bold(paste('Expression score'))),y=bquote(bold(paste('Fusion score'))))
-  ggsave(graphname, p, height=2, width=2.5)
-  }
-
 plot_by_class <- function(df, graphname, ylab){
   df <- df %>%
           filter(mut_class != 'WT')
@@ -122,12 +95,5 @@ df_exp <- df %>%
             rename(rep1=Exp_score_rep1) %>%
             rename(rep2=Exp_score_rep2) %>%
             rename(score=Exp_score)
-df_fus <- df %>%
-            rename(rep1=Fus_score_rep1) %>%
-            rename(rep2=Fus_score_rep2) %>%
-            rename(score=Fus_score)
 plot_replicate_cor(df_exp, 'graph/QC_replicate_exp.png', "Expression score")
-plot_replicate_cor(df_fus, 'graph/QC_replicate_fus.png', "Fusion score")
-plot_exp_vs_fus(df, 'graph/Exp_vs_fus.png')
 plot_by_class(df_exp, 'graph/Exp_by_class.png', 'Expression score')
-plot_by_class(df_fus, 'graph/Fus_by_class.png', 'Fusion score')

@@ -23,8 +23,8 @@ plot_score_heatmap <- function(fitness_table, WTresibox, start_resi, end_resi, l
           scale_fill_gradientn(colours=c("blue","blue","white","white","white","red","red"),
                 limits=c(-1,3),
                 values=rescale(c(-1,0,0.8,1,1.2,2,3)),
-                breaks=c(0,1,2,3),
-                labels=c('0','1','2','3'),
+                breaks=c(-1,0,1,2,3),
+                labels=c('-1','0','1','2','3'),
                 guide="colorbar",
                 na.value="grey") +
           theme_cowplot(12) +
@@ -71,7 +71,7 @@ df <- df %>%
   mutate(Pos=str_sub(resi,2,-1)) %>%
   mutate(Pos=as.numeric(as.character(Pos))) %>%
   arrange(Pos) %>%
-  mutate(parameter=Fus_score) %>% #adjust to select the parameter of interest
+  mutate(parameter=Exp_score) %>% #adjust to select the parameter of interest
   mutate(parameter=case_when(str_sub(resi,1,1)==aa ~ 1, TRUE ~ parameter)) %>% #Set WT parameter (usually 0 or 1)
   mutate(Mutation=paste(resi,aa,sep='')) %>%
   select(Mutation, Input_freq, resi, Pos, aa, parameter) #Variable name for input freq may need to chance
@@ -86,11 +86,10 @@ WTresibox  <- df %>%
 
 print (range(df$parameter,na.rm=T))
 
-legend_title <- "Fus Score"
+legend_title <- "Exp Score"
 p1 <- plot_score_heatmap(df, WTresibox, 14, 85, legend_title)
 p2 <- plot_score_heatmap(df, WTresibox, 86, 157, legend_title)
 p3 <- plot_score_heatmap(df, WTresibox, 158, 229, legend_title)
 p4 <- plot_score_heatmap(df, WTresibox, 230, 301, legend_title)
 p <- grid.arrange(p1, p2, p3, p4, nrow=4)
-ggsave('graph/NTD_fus_heatmap.png',p,width=5.5, height=7, dpi=300)
-#ggsave('graph/NTD_exp_heatmap.png',p,width=5.5, height=7, dpi=300)
+ggsave('graph/NTD_exp_heatmap.png',p,width=5.5, height=7, dpi=300)
