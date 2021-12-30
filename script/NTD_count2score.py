@@ -8,17 +8,22 @@ def count_to_freq(df, colname):
     return (df)
 
 def exp_score_calculate(df, rep, freq_cutoff):
+    print (rep)
     exp_weight = df['Expr_bin0_'+rep+'_freq']*0.25 + df['Expr_bin1_'+rep+'_freq']*0.5 + \
-                 df['Expr_bin2_'+rep+'_freq']*0.5  + df['Expr_bin3_'+rep+'_freq']*1
+                 df['Expr_bin2_'+rep+'_freq']*0.75  + df['Expr_bin3_'+rep+'_freq']*1
     exp_norm_factor = df['Expr_bin0_'+rep+'_freq'] + df['Expr_bin1_'+rep+'_freq'] + \
                       df['Expr_bin2_'+rep+'_freq'] + df['Expr_bin3_'+rep+'_freq']
     df['Exp_weight_'+rep] = exp_weight/exp_norm_factor
     df_high_freq = df[df['Input_freq'] >= freq_cutoff]
     w_summary = df_high_freq.groupby('mut_class')['Exp_weight_'+rep].mean()
     w_summary = w_summary.reset_index()
+    print (w_summary)
     w_silent   = (float(w_summary.loc[w_summary['mut_class']=='silent']['Exp_weight_'+rep]))
     w_nonsense = (float(w_summary.loc[w_summary['mut_class']=='nonsense']['Exp_weight_'+rep]))
     df['Exp_score_'+rep] = (df['Exp_weight_'+rep]-w_nonsense)/(w_silent-w_nonsense)
+    print ('w_nonsense', w_nonsense)
+    print ('w_silent', w_silent)
+    sys.exit()
     return (df)
 
 def fusion_score_calculate(df, rep, freq_cutoff):

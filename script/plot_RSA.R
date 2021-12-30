@@ -47,4 +47,4 @@ df  <- merge(x=exp, y=rsa, by = "pos", all=TRUE) %>%
          mutate(resi_type=factor(resi_type, levels=c('Buried','Interface','Exposed')))
 plot_RSA_vs_param(df, 'graph/Exp_vs_RSA.png')
 print ((paste("Cor between expression score and RSA:", cor(df$mean_exp_score, df$RSA_trimer, method='spearman'))))
-print (filter(df, resi_type == 'Buried' & mean_exp_score > 1.25))
+print (filter(df, resi_type == 'Buried' & mean_exp_score > 1))

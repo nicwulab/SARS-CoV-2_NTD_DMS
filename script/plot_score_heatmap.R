@@ -21,10 +21,10 @@ plot_score_heatmap <- function(fitness_table, WTresibox, start_resi, end_resi, l
   p <-  ggplot() +
           geom_tile(data=fitness_table,aes(x=resi,y=aa,fill=parameter)) +
           scale_fill_gradientn(colours=c("blue","blue","white","white","white","red","red"),
-                limits=c(-1,3),
-                values=rescale(c(-1,0,0.8,1,1.2,2,3)),
-                breaks=c(-1,0,1,2,3),
-                labels=c('-1','0','1','2','3'),
+                limits=c(-0.6,2.1),
+                values=rescale(c(-0.6,0,0.8,1,1.2,2,2.1)),
+                breaks=c(0,1,2),
+                labels=c('0','1','2'),
                 guide="colorbar",
                 na.value="grey") +
           theme_cowplot(12) +

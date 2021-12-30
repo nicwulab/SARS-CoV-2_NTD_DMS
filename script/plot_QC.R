@@ -6,10 +6,13 @@ library(readr)
 library(tidyr)
 library(reshape)
 library(stringr)
+library(plyr)
 library(dplyr)
 library(gridExtra)
 library(viridis)
 library(qualpalr)
+library(sinaplot)
+library(ggforce)
 require(cowplot)
 
 get_density <- function(x, y, ...) {
@@ -72,7 +75,8 @@ plot_by_class <- function(df, graphname, ylab){
   textsize <- 7
   p <- ggplot(df,aes(x=mut_class, y=score, group=mut_class)) +
          geom_violin(width=1, color="black") +
-         geom_boxplot(width=0.3, color="black", outlier.shape=NA) + 
+         geom_sina(pch=16, size=0.1,method="counts", bin_limit=0.4, scale="width", maxwidth=0.5, color='black', alpha=0.2) +
+         geom_boxplot(width=0.3, color="black", outlier.shape=NA, alpha=0) + 
          theme_cowplot(12) +
          theme(plot.title=element_blank(),
                plot.background = element_rect(fill = "white"),
@@ -88,6 +92,11 @@ plot_by_class <- function(df, graphname, ylab){
   ggsave(graphname, p, height=2, width=2)
   }
 
+t_test <- function(df, class_1, class_2){
+  p_value <- t.test(filter(df_exp, mut_class==class_1)$score, filter(df_exp, mut_class==class_2)$score)$p.value
+  print (paste("p-value of diff between", class_1, 'vs', class_2, ':', p_value))
+  }
+
 df <- read_tsv('result/NTD_DMS_scores.tsv') %>%
         filter(Input_freq >= 0.000075)
 print (nrow(df))
@@ -97,3 +106,6 @@ df_exp <- df %>%
             rename(score=Exp_score)
 plot_replicate_cor(df_exp, 'graph/QC_replicate_exp.png', "Expression score")
 plot_by_class(df_exp, 'graph/Exp_by_class.png', 'Expression score')
+t_test(df, 'silent', 'nonsense')
+t_test(df, 'silent', 'missense')
+t_test(df, 'missense', 'nonsense')
