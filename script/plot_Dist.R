@@ -9,12 +9,14 @@ library(stringr)
 library(dplyr)
 library(gridExtra)
 library(qualpalr)
+library(tidyquant)
 require(cowplot)
 
 plot_dist_vs_param <- function(df, graphname){
   textsize <- 7
   p <- ggplot(df,aes(x=`dist_to_RBD/S2`,y=mean_exp_score)) +
          geom_point(size=0.5,pch=16, alpha=0.5) +
+         #geom_smooth(method = "loess", span=1.5) +
          theme_cowplot(12) +
          theme(plot.title=element_blank(),
                plot.background = element_rect(fill = "white"),
@@ -25,7 +27,7 @@ plot_dist_vs_param <- function(df, graphname){
                legend.title=element_blank(),
                legend.text=element_text(size=textsize-1,face="bold"),
                legend.position='right') +
-         labs(x=bquote(bold(paste('Distance to RBD/S2'))),y=bquote(bold(paste('Mean expression score'))))
+         labs(x=bquote(bold(paste('Distance to RBD/S2 (Å)'))),y=bquote(bold(paste('Mean expression score'))))
   ggsave(graphname, p, height=2, width=2)
   }
 
