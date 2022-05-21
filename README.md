@@ -163,7 +163,7 @@
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
       - [./result/residue_freq.csv](./result/residue_freq.csv)
     - Output file:
-      - [./dms_expression_vs_seq_conservation.png](./dms_expression_vs_seq_conservation.png)
+      - [./graph/dms_expression_vs_seq_conservation.png](./graph/dms_expression_vs_seq_conservation.png)
  
 8. Plot mutational tolerability vs sequence conservation for individual residues   
 ``Rscript script/RSA_vs_alignment_frequency.R``   
