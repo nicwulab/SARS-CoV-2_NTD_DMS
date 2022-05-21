@@ -171,4 +171,4 @@
       - [./result/residue_freq.csv](./result/residue_freq.csv)
       - [./result/NTD_RSA.tsv](./result/NTD_RSA.tsv)
     - Output files:
-      - [./graph/RSA_vs_aignment_frequency.png](./graph/RSA_vs_aignment_frequency.png)
+      - [./graph/RSA_vs_seq_con.png](./graph/RSA_vs_seq_con.png)

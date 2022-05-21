@@ -38,5 +38,5 @@ plot_RSA_vs_freq <- function(df, graphname){
  # sp<-p+scale_y_continuous(limits=c(0, 1))
   ggsave(graphname, height=2, width=2)
 }
-plot_RSA_vs_freq(filtered_data_set, "graph/RSA_vs_aignment_frequency.png")
+plot_RSA_vs_freq(filtered_data_set, "graph/RSA_vs_seq_con.png")
 print(cor(filtered_data_set$freq, filtered_data_set$RSA_trimer,method= "spearman",use="complete.obs"))
