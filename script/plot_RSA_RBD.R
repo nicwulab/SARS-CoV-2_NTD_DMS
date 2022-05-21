@@ -14,7 +14,7 @@ require(cowplot)
 
 plot_RSA_vs_param <- function(df, graphname){
   textsize <- 7
-  p <- ggplot(df,aes(x=RSA_trimer, y=mean_exp_score)) +
+  p <- ggplot(df,aes(x=RSA, y=mean_exp_score)) +
     geom_point(size=0.5,pch=16, alpha=0.5) +
     #geom_violin(size=0.5) +
     #geom_boxplot(width=0.3, size = 0.3, color="black", outlier.shape=NA, alpha=0.5) +
@@ -39,12 +39,6 @@ resi_classification <- function(RSA_monomer, delta_RSA){
   else (return ('Exposed'))
 }
 
-exp <- read_tsv('result/NTD_DMS_scores_by_resi.tsv')
-rsa <- read_tsv('result/NTD_RSA.tsv')
-df  <- merge(x=exp, y=rsa, by = "pos", all=TRUE) %>%
-  filter(count >= 6) %>%
-  mutate(resi_type=mapply(resi_classification, RSA_monomer, delta_RSA)) %>%
-  mutate(resi_type=factor(resi_type, levels=c('Buried','Interface','Exposed')))
-plot_RSA_vs_param(df, 'graph/Exp_vs_RSA.png')
-print ((paste("Cor between expression score and RSA:", cor(df$mean_exp_score, df$RSA_trimer, method='spearman'))))
-print (filter(df, resi_type == 'Buried' & mean_exp_score > 1))
+df  <- read_tsv("result/RBD_exp_RSA.tsv")
+plot_RSA_vs_param(df, 'graph/Exp_vs_RSA_RBD.png')
+print ((paste("Cor between expression score and RSA:", cor(df$mean_exp_score, df$RSA, method='spearman'))))

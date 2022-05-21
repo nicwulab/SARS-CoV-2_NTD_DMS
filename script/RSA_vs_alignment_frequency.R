@@ -1,4 +1,3 @@
-#R code
 library(ggplot2)
 library(scales)
 library(RColorBrewer)
@@ -7,18 +6,20 @@ library(tidyr)
 library(reshape)
 library(stringr)
 library(dplyr)
+library(ggrepel)
 library(gridExtra)
-library(qualpalr)
-library(tidyquant)
 require(cowplot)
 
 frequency_data <- read.csv(file = 'result/residue_freq.csv', header = TRUE)
-scores_by_resi <- read_tsv('result/NTD_DMS_scores_by_resi.tsv')
-frequency_data$mean_exp_score <- scores_by_resi$mean_exp_score
-filtered_frequency_data <- frequency_data %>% filter(count >= 10)
-plot_freq_vs_score <- function(df, graphname){
+RSA <- read_tsv("result/NTD_RSA.tsv")
+RSA_trimer <-RSA$RSA_trimer
+freq <- frequency_data$alignment_frequency
+count <- frequency_data$count
+data_set <- data.frame(RSA_trimer, freq, count)
+filtered_data_set <- data_set %>% filter(count >= 10)
+plot_RSA_vs_freq <- function(df, graphname){
   textsize <- 7
-  p <- ggplot(df,aes(x=alignment_frequency, y=mean_exp_score)) +
+  p <- ggplot(df,aes(x=freq, y=RSA_trimer)) +
     geom_point(size=0.5,pch=16, alpha=0.5) +
     #geom_violin(size=0.5) +
     #geom_boxplot(width=0.3, size = 0.3, color="black", outlier.shape=NA, alpha=0.5) +
@@ -33,8 +34,9 @@ plot_freq_vs_score <- function(df, graphname){
           legend.title=element_blank(),
           legend.text=element_text(size=textsize-1,face="bold"),
           legend.position='right') +
-    labs(x=bquote(bold(paste('Sequence conservation'))),y=bquote(bold(paste('Mutational tolerability'))))
-  ggsave(graphname, p, height=2, width=2)
+    labs(x=bquote(bold(paste('Alignment frequency'))),y=bquote(bold(paste('Relative solvent accesibility'))))
+ # sp<-p+scale_y_continuous(limits=c(0, 1))
+  ggsave(graphname, height=2, width=2)
 }
-plot_freq_vs_score(filtered_frequency_data,"graph/dms_expression_vs_seq_conservation.png")
-print(cor(filtered_frequency_data$alignment_frequency, filtered_frequency_data$mean_exp_score,method="spearman", use="complete.obs"))
+plot_RSA_vs_freq(filtered_data_set, "graph/RSA_vs_aignment_frequency.png")
+print(cor(filtered_data_set$freq, filtered_data_set$RSA_trimer,method= "spearman",use="complete.obs"))

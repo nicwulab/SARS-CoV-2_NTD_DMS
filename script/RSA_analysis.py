@@ -4,8 +4,6 @@ import os
 import sys
 import glob
 from collections import defaultdict
-from Bio.PDB import PDBParser
-from Bio.PDB.DSSP import DSSP
 from Bio.PDB.DSSP import dssp_dict_from_pdb_file
 
 def reading_ASA(file_asa):

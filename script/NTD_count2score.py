@@ -6,7 +6,15 @@ import numpy as np
 def count_to_freq(df, colname):
     df[colname+'_freq'] = (df[colname]+1)/(df[colname].sum()+len(df))
     return (df)
-
+def count_to_total_freq(df):
+    total_count_rep_1 = df['Expr_bin0_rep1'].sum() + df['Expr_bin1_rep1'].sum() + df['Expr_bin2_rep1'].sum()  + df['Expr_bin3_rep1'].sum()
+    each_mutant_count_rep_1 = df['Expr_bin0_rep1'] + df['Expr_bin1_rep1'] + df['Expr_bin2_rep1']  + df['Expr_bin3_rep1']
+    df['totalfreq_rep_1'] = each_mutant_count_rep_1/total_count_rep_1
+    total_count_rep_2 = df['Expr_bin0_rep2'].sum() + df['Expr_bin1_rep2'].sum() + df['Expr_bin2_rep2'].sum()  + df['Expr_bin3_rep2'].sum()
+    each_mutant_count_rep_2 = df['Expr_bin0_rep2'] + df['Expr_bin1_rep2'] + df['Expr_bin2_rep2']  + df['Expr_bin3_rep2']
+    df['totalfreq_rep_2'] = each_mutant_count_rep_2/total_count_rep_2
+    df['avg_total_freq'] = (df['totalfreq_rep_1'] + df['totalfreq_rep_2']) / 2
+    return(df)
 def exp_score_calculate(df, rep, freq_cutoff):
     print (rep)
     exp_weight = df['Expr_bin0_'+rep+'_freq']*0.25 + df['Expr_bin1_'+rep+'_freq']*0.5 + \
@@ -14,7 +22,8 @@ def exp_score_calculate(df, rep, freq_cutoff):
     exp_norm_factor = df['Expr_bin0_'+rep+'_freq'] + df['Expr_bin1_'+rep+'_freq'] + \
                       df['Expr_bin2_'+rep+'_freq'] + df['Expr_bin3_'+rep+'_freq']
     df['Exp_weight_'+rep] = exp_weight/exp_norm_factor
-    df_high_freq = df[df['Input_freq'] >= freq_cutoff]
+    df_high_freq = df[df['avg_total_freq'] >= freq_cutoff]
+    print(len(df_high_freq))
     w_summary = df_high_freq.groupby('mut_class')['Exp_weight_'+rep].mean()
     w_summary = w_summary.reset_index()
     print (w_summary)
@@ -23,17 +32,16 @@ def exp_score_calculate(df, rep, freq_cutoff):
     df['Exp_score_'+rep] = (df['Exp_weight_'+rep]-w_nonsense)/(w_silent-w_nonsense)
     print ('w_nonsense', w_nonsense)
     print ('w_silent', w_silent)
-    sys.exit()
     return (df)
 
 def fusion_score_calculate(df, rep, freq_cutoff):
-    df['Fus_ratio_'+rep] = np.log10(df['Fus_pos_'+rep+'_freq']/df['Fus_neg_'+rep+'_freq'])
+    df['Normalized_fus_ratio_'+rep] = np.log10(df['Fus_pos_'+rep+'_freq']/df['Fus_neg_'+rep+'_freq']/df['avg_total_freq'])
     df_high_freq = df[df['Input_freq'] >= freq_cutoff]
-    fus_summary = df_high_freq.groupby('mut_class')['Fus_ratio_'+rep].mean()
+    fus_summary = df_high_freq.groupby('mut_class')['Normalized_fus_ratio_'+rep].mean()
     fus_summary = fus_summary.reset_index()
-    fus_silent   = (float(fus_summary.loc[fus_summary['mut_class']=='silent']['Fus_ratio_'+rep]))
-    fus_nonsense = (float(fus_summary.loc[fus_summary['mut_class']=='nonsense']['Fus_ratio_'+rep]))
-    df['Fus_score_'+rep] = (df['Fus_ratio_'+rep]-fus_nonsense)/(fus_silent-fus_nonsense)
+    fus_silent   = (float(fus_summary.loc[fus_summary['mut_class']=='silent']['Normalized_fus_ratio_'+rep]))
+    fus_nonsense = (float(fus_summary.loc[fus_summary['mut_class']=='nonsense']['Normalized_fus_ratio_'+rep]))
+    df['Fus_score_'+rep] = (df['Normalized_fus_ratio_'+rep]-fus_nonsense)/(fus_silent-fus_nonsense)
     return (df)
 
 def wrapper(count_file, freq_cutoff):
@@ -43,11 +51,12 @@ def wrapper(count_file, freq_cutoff):
     for colname in colnames:
         if 'mut' not in colname and 'frag' not in colname:
             df = count_to_freq(df, colname)
+    df = count_to_total_freq(df)
     df = exp_score_calculate(df, 'rep1', freq_cutoff)
     df = exp_score_calculate(df, 'rep2', freq_cutoff)
+    df['Exp_score'] = (df['Exp_score_rep1'] + df['Exp_score_rep2'])/2 
     df = fusion_score_calculate(df, 'rep1', freq_cutoff)
     df = fusion_score_calculate(df, 'rep2', freq_cutoff)
-    df['Exp_score'] = (df['Exp_score_rep1'] + df['Exp_score_rep2'])/2
     df['Fus_score'] = (df['Fus_score_rep1'] + df['Fus_score_rep2'])/2
     return (df)
 
