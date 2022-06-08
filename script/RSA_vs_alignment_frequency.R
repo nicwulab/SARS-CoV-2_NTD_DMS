@@ -16,7 +16,7 @@ RSA_trimer <-RSA$RSA_trimer
 freq <- frequency_data$alignment_frequency
 count <- frequency_data$count
 data_set <- data.frame(RSA_trimer, freq, count)
-filtered_data_set <- data_set %>% filter(count >= 10)
+filtered_data_set <- data_set %>% filter(count >= 6)
 plot_RSA_vs_freq <- function(df, graphname){
   textsize <- 7
   p <- ggplot(df,aes(x=freq, y=RSA_trimer)) +

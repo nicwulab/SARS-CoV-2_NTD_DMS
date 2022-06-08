@@ -15,7 +15,7 @@ require(cowplot)
 frequency_data <- read.csv(file = 'result/residue_freq.csv', header = TRUE)
 scores_by_resi <- read_tsv('result/NTD_DMS_scores_by_resi.tsv')
 frequency_data$mean_exp_score <- scores_by_resi$mean_exp_score
-filtered_frequency_data <- frequency_data %>% filter(count >= 10)
+filtered_frequency_data <- frequency_data %>% filter(count >= 6)
 plot_freq_vs_score <- function(df, graphname){
   textsize <- 7
   p <- ggplot(df,aes(x=alignment_frequency, y=mean_exp_score)) +
