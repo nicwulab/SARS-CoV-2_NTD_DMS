@@ -31,16 +31,14 @@ def parse_dssp(dssp, dict_asa, chainID, positions):
 
 def main():
   outfile  = 'result/RBD_exp_RSA.tsv' 
-  RBD_data = pd.read_csv('data/RBD_DMS.tsv', sep="\t")
-  RBD_data = RBD_data.groupby('site_SARS2')['expr_avg'].mean().reset_index()
+  RBD_data = pd.read_csv('data/RBD_DMS_exp.tsv', sep="\t")
   file_asa  = 'data/ASA.table'
   dict_asa  = reading_ASA(file_asa)
   dssp_RBD  = dssp_dict_from_pdb_file('PDB/6zge_RBD.pdb', DSSP='mkdssp')[0]
   chainID   = 'A'
   positions = list(range(331, 532))
   RSA_dict_RBD = parse_dssp(dssp_RBD, dict_asa, chainID, positions)
-  RBD_data['RSA'] = RBD_data['site_SARS2'].map(RSA_dict_RBD)
-  RBD_data.rename(columns = {'site_SARS2':'pos'}, inplace = True)
+  RBD_data['RSA'] = RBD_data['pos'].map(RSA_dict_RBD)
   print ('writing: %s' % outfile)
   RBD_data.to_csv(outfile, sep="\t", index=False)
    

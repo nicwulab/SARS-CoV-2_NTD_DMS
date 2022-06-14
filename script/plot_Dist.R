@@ -38,6 +38,7 @@ df <- merge(x=exp, y=dist, by='pos', all=TRUE) %>%
         merge(Bfac) %>%
         filter(count >= 6)
 print (head(df))
+print (length(df$pos))
 print (paste("Cor between expression score and min distance to RBD/S2:", cor(df$mean_exp_score, df$`dist_to_RBD/S2`, method='spearman')))
 print (paste("Cor between expression score and min distance to RBD:", cor(df$mean_exp_score, df$`dist_to_RBD`, method='spearman')))
 print (paste("Cor between expression score and min distance to S2:", cor(df$mean_exp_score, df$`dist_to_S2`, method='spearman')))
