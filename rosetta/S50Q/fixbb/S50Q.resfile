@@ -1,0 +1,11 @@
+# Resfile to mutate S50 to Q50 in SARS-CoV-2 spike (PDB: 6ZGE).
+
+NATAA
+EX 1 EX 2
+USE_INPUT_SC
+start
+
+# Mutate residue 50 to Q in each chain of the spike trimer. Renumbered PDB will be used.
+37 A PIKAA Q
+1135 B PIKAA Q
+2233 C PIKAA Q

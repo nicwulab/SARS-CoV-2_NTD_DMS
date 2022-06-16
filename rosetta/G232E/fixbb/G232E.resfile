@@ -1,0 +1,11 @@
+# Resfile to mutate G232 to E232 in SARS-CoV-2 spike (PDB: 6ZGE).
+
+NATAA
+EX 1 EX 2
+USE_INPUT_SC
+start
+
+# Mutate residue 232 to E in each chain of the spike trimer. Renumbered PDB will be used.
+214 A PIKAA E
+1312 B PIKAA E
+2410 C PIKAA E
