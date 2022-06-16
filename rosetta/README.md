@@ -1,4 +1,4 @@
-# Rosetta modeling of HA RBD mutations
+# Rosetta modeling of SARS-CoV-2 spike NTD mutations
 
 ## Dependencies
 
