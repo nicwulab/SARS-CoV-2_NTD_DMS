@@ -21,11 +21,11 @@ show sticks, spike and chain C and resi 2533 and (not name c+o+n)
 show sticks, spike and chain C and resi 2644 and (not name c+o+n)
 util.cnc all
 
-distance dist1, /spike//A/GLU`214/OE1, /spike//C/ARG`2644/NE
-distance dist1, /spike//A/GLU`214/OE1, /spike//C/ARG`2644/NH1
-distance dist1, /spike//A/GLU`214/OE2, /spike//C/TRP`2531/NE1
-hide label, dist1
-color black, dist1
+distance dist, /spike//A/GLU`214/OE1, /spike//C/ARG`2644/NH1
+distance dist, /spike//A/GLU`214/OE2, /spike//C/TRP`2531/NE1
+distance dist, /spike//A/GLU`214/OE2, /spike//C/ARG`2533/NH1
+hide label, dist
+color black, dist
 
 set_view (\
      0.885324895,    0.424220085,   -0.190330520,\
@@ -35,5 +35,5 @@ set_view (\
    223.672531128,  243.811019897,  174.550552368,\
     26.438667297,   52.990764618,  -20.000000000 )
     
-ray 1200,1000
+ray 1200,1200
 png ~/PDB/Images/spike_G232E.png, dpi=1200
