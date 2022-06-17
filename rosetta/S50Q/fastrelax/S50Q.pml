@@ -17,11 +17,11 @@ show cartoon, spike
 remove (hydro)
 set cartoon_flat_sheets, 0
 show surface, S2
-show sticks, chain A and resi 50+304 and (not name c+n+o)
+show sticks, chain A and resi 37+286 and (not name c+n+o)
 util.cnc all
 
 color lightblue, S2
-distance dist1, /spike//A/LYS`304/NZ, /spike//A/GLN`37/OE1
+distance dist1, /spike//A/LYS`286/NZ, /spike//A/GLN`37/OE1
 color black, dist1
 hide label, dist1
 
