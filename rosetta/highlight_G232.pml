@@ -5,14 +5,16 @@ bg_color white
 set specular_intensity, 0.2
 set valence, 0
 set seq_view, 1
+
 color gray90, spike and chain A
 color lightblue, spike and chain B
 color pink, spike and chain C
+
 hide all
 show cartoon, spike
 remove (hydro)
 set cartoon_flat_sheets, 0
-show sticks, spike and chain A and resi 232 and (not name c+o+n)
+show sphere, spike and chain A and resi 232 and (not name c+o+n)
 show sticks, spike and chain C and resi 353 and (not name c+o+n)
 show sticks, spike and chain C and resi 466 and (not name c+o+n)
 util.cnc all
