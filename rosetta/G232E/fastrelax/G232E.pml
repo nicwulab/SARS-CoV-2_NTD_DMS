@@ -16,13 +16,11 @@ remove (hydro)
 set cartoon_flat_sheets, 0
 
 show sticks, spike and chain A and resi 214 and (not name c+o+n)
-show sticks, spike and chain C and resi 2531 and (not name c+o+n)
 show sticks, spike and chain C and resi 2533 and (not name c+o+n)
 show sticks, spike and chain C and resi 2644 and (not name c+o+n)
 util.cnc all
 
 distance dist, /spike//A/GLU`214/OE1, /spike//C/ARG`2644/NH1
-distance dist, /spike//A/GLU`214/OE2, /spike//C/TRP`2531/NE1
 distance dist, /spike//A/GLU`214/OE2, /spike//C/ARG`2533/NH1
 hide label, dist
 color black, dist
