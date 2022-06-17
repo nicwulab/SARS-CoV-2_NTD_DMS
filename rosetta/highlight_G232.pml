@@ -16,6 +16,7 @@ remove (hydro)
 set cartoon_flat_sheets, 0
 show sphere, spike and chain A and resi 232 and (not name c+o+n)
 show sticks, spike and chain C and resi 353 and (not name c+o+n)
+show sticks, spike and chain C and resi 355 and (not name c+o+n)
 show sticks, spike and chain C and resi 466 and (not name c+o+n)
 util.cnc all
 
