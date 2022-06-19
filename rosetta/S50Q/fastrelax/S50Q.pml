@@ -21,10 +21,6 @@ show sticks, chain A and resi 37+286 and (not name c+n+o)
 util.cnc all
 
 color lightblue, S2
-distance dist1, /spike//A/LYS`286/NZ, /spike//A/GLN`37/OE1
-color black, dist1
-hide label, dist1
-
 
 set_view (\
      0.063089155,   -0.537977219,   -0.840579927,\
