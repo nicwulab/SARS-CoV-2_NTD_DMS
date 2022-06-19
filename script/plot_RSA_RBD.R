@@ -29,6 +29,7 @@ plot_RSA_vs_param <- function(df, graphname){
           legend.title=element_blank(),
           legend.text=element_text(size=textsize-1,face="bold"),
           legend.position='right') +
+    scale_y_continuous(breaks=c(0.25, 0.5, 0.75, 1, 1.25))+
     labs(x=bquote(bold(paste('Relative solvent accessibility'))),y=bquote(bold(paste('Mutational tolerability'))))
   ggsave(graphname, p, height=2, width=2)
 }
@@ -39,6 +40,6 @@ resi_classification <- function(RSA_monomer, delta_RSA){
   else (return ('Exposed'))
 }
 
-df  <- read_tsv("result/RBD_exp_RSA.tsv")
-plot_RSA_vs_param(df, 'graph/Exp_vs_RSA_RBD.png')
+df  <- read_tsv("new_RBD_RSA.tsv")
+plot_RSA_vs_param(df, 'Exp_vs_RSA_RBD.png')
 print ((paste("Cor between expression score and RSA:", cor(df$mean_exp_score, df$RSA, method='spearman'))))
