@@ -21,7 +21,7 @@ show sticks, spike and chain C and resi 2644 and (not name c+o+n)
 util.cnc all
 
 distance dist, /spike//A/GLU`214/OE1, /spike//C/ARG`2644/NH1
-distance dist, /spike//A/GLU`214/OE2, /spike//C/ARG`2533/NH1
+distance dist, /spike//A/GLU`214/OE2, /spike//C/ARG`2533/NH2
 hide label, dist
 color black, dist
 
