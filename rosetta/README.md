@@ -18,7 +18,6 @@
 
 2. For each mutation (S50Q or G232E), perform point mutagenesis. Point mutagenesis was run using `<rosetta_location>/main/source/bin/fixbb.static.macosclangrelease -s spike_renum.pdb -resfile <Mutation>.resfile -nstruct 100` while in the folder where `spike_renum.pdb` is located. One-hundred poses were generated.
     * Change `macosclangrelease` depending on your operating system.
-    * Fixed backbone mutagenesis for each mutation took approximately 5.5 hours to run on a computer with 16 GB RAM and a 2 GHz Quad-Core Intel Core i5 processor.
 
 3. Examine the .sc score file and select the pose that has the lowest overall score. Copy this file to another folder for fast relax.
 
@@ -26,9 +25,8 @@
 
 5. Convert the .log file to a .cst file using `bash <rosetta_location>/main/source/src/apps/public/ddg/convert_to_cst_file.sh ./mincst.log > ./constraint.cst`.
 
-6. With the **constraint.cst** file and the pdb file of the lowest scoring pose from point mutagenesis in the same folder, perform fast relax using `<rosetta_location>/main/source/bin/relax.static.linuxgccrelease -database <rosetta_location>/main/database/ -in:file:s <pdb file with lowest score after point mutagenesis>.pdb -in:file:fullatom -relax:fast -constraints:cst_file constraint.cst -relax:ramp_constraints false -nstruct 3`. Three poses were generated.
+6. With the **constraint.cst** file and the pdb file of the lowest scoring pose from point mutagenesis in the same folder, perform fast relax using `<rosetta_location>/main/source/bin/relax.static.linuxgccrelease -database <rosetta_location>/main/database/ -in:file:s <pdb file with lowest score after point mutagenesis>.pdb -in:file:fullatom -relax:fast -constraints:cst_file constraint.cst -relax:ramp_constraints false -nstruct 8`. Eight poses were generated.
     * Change `macosclangrelease` depending on your operating system.
-    * Fast relax for each mutation took approximately 2 days to run on a computer with 16 GB RAM and a 2 GHz Quad-Core Intel Core i5 processor.
 
 7. pml files for making images are included in the **fastrelax** folder for each mutagenesis.
 
