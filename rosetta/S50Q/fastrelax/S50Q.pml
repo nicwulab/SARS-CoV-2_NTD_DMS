@@ -10,7 +10,7 @@ color gray90, spike and chain A
 color lightblue, spike and chain B
 color pink, spike and chain C
 cartoon loop, resi 26-46
-extract S2, spike and chain B+C and resi 532-1000
+extract S2, spike and chain B and resi 1630-2098
 
 hide all
 show cartoon, spike
@@ -22,6 +22,10 @@ util.cnc all
 
 color lightblue, S2
 
+distance dist1, /spike//A/LYS`286/NZ, /spike//A/GLN`37/OE1
+color black, dist1
+hide label, dist1
+
 set_view (\
      0.063089155,   -0.537977219,   -0.840579927,\
     -0.915875852,   -0.365781099,    0.165365636,\
@@ -30,5 +34,5 @@ set_view (\
    223.444351196,  237.225250244,  208.300979614,\
     23.945901871,   45.307220459,  -20.000000000 )
 
-ray 1200,1000
+ray 1200,1200
 png ~/PDB/Images/spike_S50Q.png, dpi=1200
