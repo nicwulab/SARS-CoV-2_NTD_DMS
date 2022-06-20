@@ -32,4 +32,4 @@
 
 ## Notes
 
-* The parameter _nstruct_ can be varied depending on the number of output poses. In our case, we chose 100 output poses for fixed backbone point mutagenesis and 3 output poses for fast relax. The lowest scoring pose after fixed backbone mutagenesis is in the **fixbb** folder for each mutagenesis. The lowest scoring pose after fast relax is in the **fastrelax** folder for each mutagenesis.
+* The parameter _nstruct_ can be varied depending on the number of output poses. In our case, we chose 100 output poses for fixed backbone point mutagenesis and 8 output poses for fast relax. The lowest scoring pose after fixed backbone mutagenesis is in the **fixbb** folder for each mutagenesis. The lowest scoring pose after fast relax is in the **fastrelax** folder for each mutagenesis.
