@@ -72,7 +72,7 @@ def main():
     df['resi'] = df['mut'].str[0:-1]
     all_resi   = df[df['mut_class'] != 'WT'].groupby('resi').size().reset_index()
     df_by_resi = df
-    df_by_resi = df_by_resi[df_by_resi['Input_freq'] >= freq_cutoff]
+    df_by_resi = df_by_resi[df_by_resi['avg_total_freq'] >= freq_cutoff]
     df_by_resi = df_by_resi[df_by_resi['mut_class'] != 'WT']
     df_by_resi = df_by_resi[df_by_resi['mut_class'] != 'silent']
     df_by_resi = df_by_resi[df_by_resi['mut_class'] != 'nonsense']
