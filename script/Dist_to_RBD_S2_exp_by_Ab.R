@@ -17,7 +17,7 @@ require(cowplot)
 plot_dist_vs_param <- function(df, graphname){
   textsize <- 7
   p <- ggplot(df,aes(x=`dist_to_RBD/S2`,y=mean_exp_score)) +
-    geom_point(size=0.5,pch=16, alpha=0.3) +
+    geom_point(size=0.5,pch=16, alpha=0.5) +
     #geom_point(data=not_b, aes(x=`dist_to_RBD/S2`,y=mean_exp_score), color="red", size=0.5,pch=16, alpha=0.7)+
     #geom_point(data=kinda_b, aes(x=`dist_to_RBD/S2`,y=mean_exp_score), color="blue", size=0.5,pch=16, alpha=0.7)+
     #geom_point(data=b1, aes(x=`dist_to_RBD/S2`,y=mean_exp_score), color="green", size=0.5,pch=16, alpha=0.7)+
@@ -104,3 +104,4 @@ antibody_types <- c('NTD supersite','C1717','C1520','C1791')
     #p_value <- t.test(filter(fit_table,type==pos_type1)$RSA_tetramer, filter(fit_table,type==pos_type2)$RSA_tetramer)$p.value
     print (paste('NTD supersite vs', pos_type1, ':', p_value))
   }
+
