@@ -10,9 +10,17 @@ def count_to_total_freq(df):
     total_count_rep_1 = df['Expr_bin0_rep1'].sum() + df['Expr_bin1_rep1'].sum() + df['Expr_bin2_rep1'].sum()  + df['Expr_bin3_rep1'].sum()
     each_mutant_count_rep_1 = df['Expr_bin0_rep1'] + df['Expr_bin1_rep1'] + df['Expr_bin2_rep1']  + df['Expr_bin3_rep1']
     df['totalfreq_rep_1'] = each_mutant_count_rep_1/total_count_rep_1
+    df['bin0_bin3_ratio_rep1'] = (df['Expr_bin0_rep1'] + df['Expr_bin3_rep1'])/each_mutant_count_rep_1
+    df['bin0_ratio_rep1'] = df['Expr_bin0_rep1']/each_mutant_count_rep_1
+    df['bin3_ratio_rep1'] = df['Expr_bin3_rep1']/each_mutant_count_rep_1
     total_count_rep_2 = df['Expr_bin0_rep2'].sum() + df['Expr_bin1_rep2'].sum() + df['Expr_bin2_rep2'].sum()  + df['Expr_bin3_rep2'].sum()
     each_mutant_count_rep_2 = df['Expr_bin0_rep2'] + df['Expr_bin1_rep2'] + df['Expr_bin2_rep2']  + df['Expr_bin3_rep2']
     df['totalfreq_rep_2'] = each_mutant_count_rep_2/total_count_rep_2
+    df['counts_across_bins_rep_2'] = each_mutant_count_rep_2
+    df['bin0_bin3_ratio_rep2'] = (df['Expr_bin0_rep2'] + df['Expr_bin3_rep2'])/each_mutant_count_rep_2
+    df['bin0_ratio_rep2'] = df['Expr_bin0_rep2']/each_mutant_count_rep_2
+    df['bin3_ratio_rep2'] = df['Expr_bin3_rep2']/each_mutant_count_rep_2
+
     df['avg_total_freq'] = (df['totalfreq_rep_1'] + df['totalfreq_rep_2']) / 2
     return(df)
 def exp_score_calculate(df, rep, freq_cutoff):
@@ -64,6 +72,7 @@ def main():
     freq_cutoff = 0.000075
     outfile_1 = "result/NTD_DMS_scores.tsv"
     outfile_2 = "result/NTD_DMS_scores_by_resi.tsv"
+    outfile_3 = "result/NTD_DMS_scores_by_resi_and_replicates.tsv"
     df_A = wrapper("result/NTD_DMS_count_aa_A.tsv", freq_cutoff)
     df_B = wrapper("result/NTD_DMS_count_aa_B.tsv", freq_cutoff)
     df   = pd.concat([df_A, df_B])
@@ -85,6 +94,22 @@ def main():
     df_by_resi = df_by_resi[['resi','pos','count','mean_exp_score']]
     print ('writing: %s' % outfile_2)
     df_by_resi.to_csv(outfile_2, sep="\t", index=False)
+
+    df_by_resi_and_replicates = df
+    df_by_resi_and_replicates = df_by_resi_and_replicates[df_by_resi_and_replicates['avg_total_freq'] >= freq_cutoff]
+    df_by_resi_and_replicates = df_by_resi_and_replicates[df_by_resi_and_replicates['mut_class'] != 'WT']
+    df_by_resi_and_replicates = df_by_resi_and_replicates[df_by_resi_and_replicates['mut_class'] != 'silent']
+    df_by_resi_and_replicates = df_by_resi_and_replicates[df_by_resi_and_replicates['mut_class'] != 'nonsense']
+    df_by_resi_mean_rep1  = df_by_resi_and_replicates.groupby('resi')['Exp_score_rep1'].mean().reset_index(name='mean_exp_score_rep1')
+    df_by_resi_mean_rep2  = df_by_resi_and_replicates.groupby('resi')['Exp_score_rep2'].mean().reset_index(name='mean_exp_score_rep2')
+    df_by_resi_and_replicates = pd.merge(df_by_resi_mean_rep1, df_by_resi_mean_rep2, on='resi', how='outer')
+    df_by_resi_and_replicates = pd.merge(df_by_resi_and_replicates, df_by_resi_count, on='resi', how='outer')
+    df_by_resi_and_replicates = pd.merge(all_resi, df_by_resi_and_replicates, on='resi', how='outer')
+    df_by_resi_and_replicates = df_by_resi_and_replicates.sort_values(by='resi', key=lambda x:x.str[1::].astype(int))
+    df_by_resi_and_replicates['pos'] = df_by_resi_and_replicates['resi'].str[1::].astype(int)
+    df_by_resi_and_replicates = df_by_resi_and_replicates[['resi','pos','count','mean_exp_score_rep1','mean_exp_score_rep2']]
+    print ('writing: %s' % outfile_3)   
+    df_by_resi_and_replicates.to_csv(outfile_3, sep="\t", index=False)
 
 if __name__ == "__main__":
     main()
