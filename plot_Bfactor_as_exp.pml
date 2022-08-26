@@ -19,3 +19,26 @@ show surface, spike
 color orange, NTD and resi 1301
 util.cnc NTD and resi 1301
 show cartoon, NTD
+
+hide all
+create RBD, 6zge and (resi 331-527)
+create S2, 6zge and (not (resi 14-527))
+create other_NTD, 6zge and chain A and chain B and resi 14-301
+create other_NTD, 6zge and chain B+C and resi 14-301
+color lightpink, other_NTD
+color wheat, RBD
+color palegreen, S2
+show cartoon, RBD
+show cartoon, NTD
+show cartoon, other_NTD
+show cartoon, S2
+
+set_view (\
+     0.796642780,    0.592633903,    0.118820176,\
+     0.306436151,   -0.565446794,    0.765734971,\
+     0.520990014,   -0.573608220,   -0.632077157,\
+     0.000000000,    0.000000000, -218.880157471,\
+    30.626884460,   -0.948181152,  -29.811660767,\
+  -15204.945312500, 15642.705078125,  -20.000000000 )
+ray 1000,1000
+png PDB/Overlay_closeup_topdown.png
