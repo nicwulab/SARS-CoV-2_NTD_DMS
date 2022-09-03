@@ -23,15 +23,24 @@ plot_position_type <- function(data_table, graphname, ylab,violin){
       mutate(name = factor(type, levels=c("Circulating mutations","Other mutations"))) %>% 
       ggplot() +
       geom_violin(aes(x=name,y=Exp_score),size=0.3, scale='area', width=1)
+<<<<<<< HEAD
     ggsave(graphname, p, width=2, height=2.5, dpi=600)
+=======
+    ggsave(graphname, p, width=2, height=2.2, dpi=600)
+>>>>>>> c3942f1d79be640f0c1764487828d993878c7e61
   }
   else{
     p <-  ggplot()
   }
   p <- p +
     geom_sina(data=data_table,aes(x=type,y=Exp_score),
+<<<<<<< HEAD
               pch=16, size=0.1,method="counts", bin_limit=0.4, scale="width", maxwidth=0.5, color='gray40', alpha=0.3) +
     geom_boxplot(data=data_table,aes(x=type,y=Exp_score),width=0.2, outlier.shape=NA, size=0.3, color='black',alpha=0.2) +
+=======
+              pch=16, size=0.1,method="counts", bin_limit=0.4, scale="width", maxwidth=0.5, color='gray40', alpha=0.5) +
+    geom_boxplot(data=data_table,aes(x=type,y=Exp_score),width=0.2, outlier.shape=NA, size=0.3) +
+>>>>>>> c3942f1d79be640f0c1764487828d993878c7e61
     theme_cowplot(12) +
     theme(plot.background = element_rect(fill = "white"),
           axis.text=element_text(size=textsize,face="bold",colour = 'black'),
@@ -92,7 +101,11 @@ plot_indel_vs_other <- function(data_table, graphname, ylab,violin){
   p <- p +
     geom_sina(data=data_table,aes(x=type,y=mean_exp_score),
               pch=16, size=0.1,method="counts", bin_limit=0.4, scale="width", maxwidth=0.5, color='gray40', alpha=0.5) +
+<<<<<<< HEAD
     geom_boxplot(data=data_table,aes(x=type,y=mean_exp_score),width=0.2, outlier.shape=NA, size=0.3,color='black', alpha=0.2) +
+=======
+    geom_boxplot(data=data_table,aes(x=type,y=mean_exp_score),width=0.2, outlier.shape=NA, size=0.3) +
+>>>>>>> c3942f1d79be640f0c1764487828d993878c7e61
     theme_cowplot(12) +
     theme(plot.background = element_rect(fill = "white"),
           axis.text=element_text(size=textsize,face="bold",colour = 'black'),
@@ -119,7 +132,11 @@ df  <- read_tsv('result/NTD_DMS_scores.tsv')%>%
 
 print(nrow(df))
 NTD_circulating_mutation<- c('L18F', 'T19R','T19I', 'T20N', 'P26S', 'A27S', 'Q52R','H66D','A67V', 'G75V', 'T76I', 'D80A', 'T95I', 'R102I', 'D138Y', 'G142D', 'Y145H', 'W152C', 'E154K', 'F157L', 'F158G', 'R190S', 'V213G', 'D215G', 'A222V', 'D253G', 'A258L')
+<<<<<<< HEAD
 NTD_mutation_sites <- c(18,19,20,26,27,52,66,67,75,76,80,95,138,102,142,145,152,154,157,158,190,213,215,222,253,258) #27,52,66,80,95,102,138,157,158,190,213,215,222,253
+=======
+NTD_mutation_sites <- c(18,19,20,26,27,52,66,67,75,76,80,95,138,102,142,145,152,154,157,158,190,213,215,222,253,258)
+>>>>>>> c3942f1d79be640f0c1764487828d993878c7e61
 print(length(NTD_circulating_mutation))
 
 
@@ -138,8 +155,11 @@ plot_dist_vs_param(df_mut, "graph/ntd_circultating_mutation_correlation.png")
 
 print(cor(df_mut$Exp_score_rep1, df_mut$Exp_score_rep2))
 
+<<<<<<< HEAD
 print(t.test(filter(df,type == "Other mutations")$Exp_score,filter(df,type == "Circulating mutations")$Exp_score)) 
 
+=======
+>>>>>>> c3942f1d79be640f0c1764487828d993878c7e61
 df_mean <- read_tsv('result/NTD_DMS_scores_by_resi.tsv')%>% filter(count>=6)
 
 NTD_deletion_sites <- c(24,25,26,27,69,70,142,143,144,145,156,157,211,212,214,241,242,243,246,247,248,249,250,251,252)
