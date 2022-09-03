@@ -29,6 +29,7 @@ plot_RSA_vs_param <- function(df, graphname){
           legend.title=element_blank(),
           legend.text=element_text(size=textsize-1,face="bold"),
           legend.position='right') +
+          scale_y_continuous(limit=c(0.5,1.5),breaks=c(0.5, 0.75, 1.00, 1.25, 1.50))+
     labs(x=bquote(bold(paste('Relative solvent accessibility'))),y=bquote(bold(paste('Mutational tolerability'))))
   ggsave(graphname, p, height=2, width=2)
 }

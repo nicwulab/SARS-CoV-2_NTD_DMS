@@ -10,19 +10,14 @@ def count_to_total_freq(df):
     total_count_rep_1 = df['Expr_bin0_rep1'].sum() + df['Expr_bin1_rep1'].sum() + df['Expr_bin2_rep1'].sum()  + df['Expr_bin3_rep1'].sum()
     each_mutant_count_rep_1 = df['Expr_bin0_rep1'] + df['Expr_bin1_rep1'] + df['Expr_bin2_rep1']  + df['Expr_bin3_rep1']
     df['totalfreq_rep_1'] = each_mutant_count_rep_1/total_count_rep_1
-    df['bin0_bin3_ratio_rep1'] = (df['Expr_bin0_rep1'] + df['Expr_bin3_rep1'])/each_mutant_count_rep_1
-    df['bin0_ratio_rep1'] = df['Expr_bin0_rep1']/each_mutant_count_rep_1
-    df['bin3_ratio_rep1'] = df['Expr_bin3_rep1']/each_mutant_count_rep_1
     total_count_rep_2 = df['Expr_bin0_rep2'].sum() + df['Expr_bin1_rep2'].sum() + df['Expr_bin2_rep2'].sum()  + df['Expr_bin3_rep2'].sum()
     each_mutant_count_rep_2 = df['Expr_bin0_rep2'] + df['Expr_bin1_rep2'] + df['Expr_bin2_rep2']  + df['Expr_bin3_rep2']
     df['totalfreq_rep_2'] = each_mutant_count_rep_2/total_count_rep_2
-    df['counts_across_bins_rep_2'] = each_mutant_count_rep_2
-    df['bin0_bin3_ratio_rep2'] = (df['Expr_bin0_rep2'] + df['Expr_bin3_rep2'])/each_mutant_count_rep_2
-    df['bin0_ratio_rep2'] = df['Expr_bin0_rep2']/each_mutant_count_rep_2
-    df['bin3_ratio_rep2'] = df['Expr_bin3_rep2']/each_mutant_count_rep_2
+    
 
     df['avg_total_freq'] = (df['totalfreq_rep_1'] + df['totalfreq_rep_2']) / 2
     return(df)
+
 def exp_score_calculate(df, rep, freq_cutoff):
     print (rep)
     exp_weight = df['Expr_bin0_'+rep+'_freq']*0.25 + df['Expr_bin1_'+rep+'_freq']*0.5 + \
@@ -40,6 +35,19 @@ def exp_score_calculate(df, rep, freq_cutoff):
     df['Exp_score_'+rep] = (df['Exp_weight_'+rep]-w_nonsense)/(w_silent-w_nonsense)
     print ('w_nonsense', w_nonsense)
     print ('w_silent', w_silent)
+    return (df)
+
+def biomodality_analysis(df):
+    df['sum_freq_rep1'] = df['Expr_bin0_rep1_freq'] + df['Expr_bin1_rep1_freq'] + df['Expr_bin2_rep1_freq']  + df['Expr_bin3_rep1_freq']
+    #df['bin0_bin3_ratio_rep1'] = (df['Expr_bin0_rep1'] + df['Expr_bin3_rep1'])/each_mutant_count_rep_1
+    df['bin0_ratio_rep1'] = df['Expr_bin0_rep1_freq']/df['sum_freq_rep1']
+    df['bin3_ratio_rep1'] = df['Expr_bin3_rep1_freq']/df['sum_freq_rep1']
+
+    df['sum_freq_rep2'] = df['Expr_bin0_rep2_freq'] + df['Expr_bin1_rep2_freq'] + df['Expr_bin2_rep2_freq']  + df['Expr_bin3_rep2_freq']
+    #df['counts_across_bins_rep_2'] = each_mutant_count_rep_2
+    #df['bin0_bin3_ratio_rep2'] = (df['Expr_bin0_rep2'] + df['Expr_bin3_rep2'])/each_mutant_count_rep_2
+    df['bin0_ratio_rep2'] = df['Expr_bin0_rep2_freq']/df['sum_freq_rep2']
+    df['bin3_ratio_rep2'] = df['Expr_bin3_rep2_freq']/df['sum_freq_rep2'] #using freq instead of counts for bimodality analysis
     return (df)
 
 def fusion_score_calculate(df, rep, freq_cutoff):
@@ -66,6 +74,7 @@ def wrapper(count_file, freq_cutoff):
     df = fusion_score_calculate(df, 'rep1', freq_cutoff)
     df = fusion_score_calculate(df, 'rep2', freq_cutoff)
     df['Fus_score'] = (df['Fus_score_rep1'] + df['Fus_score_rep2'])/2
+    df = biomodality_analysis(df)
     return (df)
 
 def main():

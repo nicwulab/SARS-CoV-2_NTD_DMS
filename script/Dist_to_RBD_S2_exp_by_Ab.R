@@ -33,6 +33,7 @@ plot_dist_vs_param <- function(df, graphname){
           legend.title=element_blank(),
           legend.text=element_text(size=textsize-1,face="bold"),
           legend.position='right') +
+          scale_y_continuous(limit=c(0.5,1.5),breaks=c(0.5, 0.75, 1.00, 1.25, 1.50))+
     labs(x=bquote(bold(paste('Distance to RBD/S2 (',ring(A),')',sep=''))),y=bquote(bold(paste('Mutational tolerability'))))
   ggsave(graphname, p, height=2, width=2)
 }
@@ -43,7 +44,8 @@ plot_position_type <- function(data_table, graphname, ylab,violin){
   if (violin=='yes'){
     p <-  ggplot() +
       geom_violin(data=data_table,aes(x=type,y=mean_exp_score),size=0.3, scale='area', width=1)+
-      scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+      scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+      scale_y_continuous(limit=c(0.5,1.5),breaks=c(0.5, 0.75, 1.00, 1.25, 1.50))
   }
   else{
     p <-  ggplot()
@@ -64,6 +66,7 @@ plot_position_type <- function(data_table, graphname, ylab,violin){
           legend.text=element_text(size=textsize,face="bold"),
           legend.position='right') +
     guides(colour = guide_legend(override.aes = list(size=0.5))) +
+    scale_y_continuous(limit=c(0.5,1.5),breaks=c(0.5, 0.75, 1.00, 1.25, 1.50))+
     xlab("") +
     ylab(ylab)+ scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
   ggsave(graphname, p, width=2, height=2.2, dpi=600)
