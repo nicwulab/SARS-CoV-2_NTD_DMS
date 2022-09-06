@@ -92,7 +92,7 @@ hide cartoon, other_NTD
 hide cartoon, S2
 
 
-show sphere, NTD and resi 18+19+20+26+27+52+66+67+75+76+80+95+102+138+142+145+152+154+157+158+190+213+215+222+253+268 and (name ca)
+show sphere, NTD and resi 18+19+20+26+52+67+75+76+80+95+138+142+147+152+154+157+158+190+210+213+215+253+257 and (name ca)
 
 set sphere_scale, 0.7
 
@@ -127,7 +127,7 @@ set_view (\
 ray 1000, 1000
 png circulating_mutation_3.png
 
-hide sphere, NTD and resi 18+19+20+26+27+52+66+67+75+76+80+95+102+138+142+145+152+154+157+158+190+213+215+222+253+268 and (name ca)
+hide sphere, NTD and resi 18+19+20+26+52+67+75+76+80+95+138+142+147+152+154+157+158+190+210+213+215+253+257 and (name ca)
 
 show sphere, NTD and resi 24+25+26+27+69+70+142+143+144+145+156+157+211+212+214+241+242+243+246+247+248+249+250+251+252 and (name ca)
 
