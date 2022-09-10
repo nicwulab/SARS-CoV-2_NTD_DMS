@@ -248,7 +248,6 @@
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
     - Output files:
       - [./graph/NTD_loop_vs_other_residues.png](./graph/NTD_loop_vs_other_residues.png)
-
 ``Rscript script/Hot_spots_vs_other_residues.R``  
      - Input files:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
