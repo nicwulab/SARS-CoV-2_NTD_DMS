@@ -251,5 +251,5 @@
 ``Rscript script/Hot_spots_vs_other_residues.R``  
      - Input files:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
-    - Output files:
+      - Output files:
       - [./graph/hot_spots_vs_other_residues.png](./graph/hot_spots_vs_other_residues.png)
