@@ -77,20 +77,17 @@
       - [./graph/QC_replicate_exp.png](./graph/QC_replicate_exp.png)
       - [./graph/Exp_by_class.png](./graph/Exp_by_class.png)
       - [./result/NTD_DMS_expression_score.tsv](./result/NTD_DMS_expression_score.tsv)
-
 ``Rscript script/plot_QC_mean_exp_by_replicates.R``   
     - Input file:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
     - Output files:
       - [./graph/QC_replicate_mean_exp.png](./graph/QC_replicate_mean_exp.png)
-
 ``Rscript script/QC_bin0_vs_bin3_counts.R``
     - Input file:
       - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
     - Output files:
       - [./graph/bin0_bin_3_ratio_rep_1_all.png](./graph/bin0_bin_3_ratio_rep_1_all.png)
       - [./graph/bin0_bin_3_ratio_rep_2_all.png](./graph/bin0_bin_3_ratio_rep_2_all.png)
-
 ``Rscript script/QC_bin0_vs_bin3_biomodality.R``
     - Input file:
       - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
@@ -176,13 +173,11 @@
       - [./graph/Exp_vs_RSA.png](./graph/Exp_vs_RSA.png)
 
 7. Plot mutational tolerability vs RSA for RBD DMS data   
-
 ``Rscript script/Mean_expression_score_in_mammalian_system.R``   
     - Input file:
       - [./result/RBD_DMS_data.csv](./result/RBD_DMS_data.csv)
     - Output file:
       - [./result/RBD_exp_RSA.tsv](./result/RBD_exp_RSA.tsv)
-
 ``Rscript script/plot_RSA_RBD.R``   
     - Input file:
       - [./result/RBD_exp_RSA.tsv](./result/RBD_exp_RSA.tsv)
@@ -197,7 +192,6 @@
     - Output file:
       - [./graph/Exp_vs_dist.png](./graph/Exp_vs_dist.png)
       - [./graph/antibody_epi_vs_mean_exp.png](./graph/antibody_epi_vs_mean_exp.png)
-
 ``Rscript script/antibody_epitopes_vs_distances.R``   
     - Input file:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
@@ -241,22 +235,22 @@
 
 12. Analysis of the ciculating NTD mutations/indels among 17 major variants
 ``Rscript script/NTD_circulating_mutation_vs_other_residues.R``  
-  - Input files:
+    - Input files:
       - [./result/NTD_DMS_scores.tsv](./result/NTD_DMS_scores.tsv)
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
-  - Output files:
+    - Output files:
       - [./graph/ntd_circulating_mutations_vs_other_mutations.png](./graph/ntd_circulating_mutations_vs_other_mutations.png)
       - [./graph/ntd_indel_sites_vs_other_sites.png](./graph/ntd_indel_sites_vs_other_sites.png)
 
 13. Mutational tolerability of selected regions compared to other residues
 ``Rscript script/NTD_loop_vs_other_residues.R``  
-  - Input files:
+    - Input files:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
-  - Output files:
+    - Output files:
       - [./graph/NTD_loop_vs_other_residues.png](./graph/NTD_loop_vs_other_residues.png)
 
 ``Rscript script/Hot_spots_vs_other_residues.R``  
-  - Input files:
+     - Input files:
       - [./result/NTD_DMS_scores_by_resi.tsv](./result/NTD_DMS_scores_by_resi.tsv)
-  - Output files:
+    - Output files:
       - [./graph/hot_spots_vs_other_residues.png](./graph/hot_spots_vs_other_residues.png)
